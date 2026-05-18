@@ -1,0 +1,24 @@
+{
+  "name": "debug-bot-tgh-telegram-bot",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/bot.js",
+  "scripts": {
+    "dev": "tsx watch src/bot.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/bot.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "luxon": "^3.5.0",
+    "pino": "^9.7.0",
+    "telegraf": "^4.16.3",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.15.21",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

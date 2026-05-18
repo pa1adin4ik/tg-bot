@@ -1,7 +1,7 @@
-# Railway service config — set Root Directory to "bot" in the service settings.
+# Railway reads this only when config path is set to /bot/railway.toml (see Railway monorepo docs).
 [build]
-builder = "nixpacks"
-buildCommand = "npm run build"
+builder = "RAILPACK"
+buildCommand = "npm ci && npm run build"
 
 [deploy]
 startCommand = "npm run start"

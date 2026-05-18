@@ -1,7 +1,6 @@
-# Fallback when the service builds from the repository root (not recommended).
-# Prefer setting Root Directory to "bot" in Railway → Settings → Source.
+# Used when building from repo root. Prefer Root Directory = bot + /bot/railway.toml.
 [build]
-builder = "nixpacks"
+builder = "RAILPACK"
 buildCommand = "npm --prefix bot ci && npm --prefix bot run build"
 
 [deploy]

@@ -49,15 +49,29 @@ Open http://localhost:5173
 
 ## Railway (Telegram bot)
 
-1. In Railway → **tg-bot** service → **Settings** → **Source**, set **Root Directory** to `bot`.
-2. Add variables (required):
-   - `BOT_TOKEN` — from [@BotFather](https://t.me/BotFather)
-   - `BOT_USERNAME` — bot username without `@`
-   - `BACKEND_API_URL` — your API base URL (e.g. `https://api.example.com/api/v1`)
-   - `BOT_API_SECRET` — same value as backend `BOT_API_SECRET`
-3. Redeploy.
+Railpack needs an explicit start command. This repo provides `bot/railpack.json` and `bot/railway.json`.
 
-If Root Directory cannot be changed, the repo root `package.json` and `railway.toml` delegate `build` / `start` to `bot/`.
+### Recommended setup
+
+1. **Settings → Source → Root Directory:** `bot`
+2. **Settings → Deploy → Custom start command:** `npm run start` (set manually if auto-detect still fails)
+3. **Settings → Build → Custom build command:** `npm ci && npm run build`
+4. **Settings → Config-as-code path** (if shown): `/bot/railway.json`  
+   Railway does **not** apply `railway.toml` from the repo root when Root Directory is `bot`.
+5. **Variables** (required):
+   - `BOT_TOKEN`
+   - `BOT_USERNAME`
+   - `BACKEND_API_URL` (e.g. `https://your-api.up.railway.app/api/v1`)
+   - `BOT_API_SECRET`
+6. **Redeploy** after saving settings (trigger a new deployment, not just restart).
+
+### If Root Directory stays at repo root
+
+Root `package.json`, `railpack.json`, `railway.json`, and `Procfile` delegate build/start to `bot/`.
+
+### Clear stale Railway config
+
+If deploys still fail after pushing fixes: remove any old **Dockerfile** / **Nixpacks** builder override in the service, set **Builder** to **Railpack**, and empty then re-enter the start command in the dashboard.
 
 ## Production
 

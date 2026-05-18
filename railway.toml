@@ -1,0 +1,10 @@
+# Fallback when the service builds from the repository root (not recommended).
+# Prefer setting Root Directory to "bot" in Railway → Settings → Source.
+[build]
+builder = "nixpacks"
+buildCommand = "npm --prefix bot ci && npm --prefix bot run build"
+
+[deploy]
+startCommand = "npm --prefix bot run start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

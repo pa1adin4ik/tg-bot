@@ -1,9 +1,21 @@
 {
-  "devDependencies": {
-    "prisma": "^6.19.3"
+  "name": "tg-bot-monorepo",
+  "private": true,
+  "description": "Monorepo: bot (Telegram), backend (API), admin (panel). Deploy bot with Railway Root Directory = bot.",
+  "scripts": {
+    "build": "npm --prefix bot ci && npm --prefix bot run build",
+    "start": "npm --prefix bot run start",
+    "bot:build": "npm --prefix bot run build",
+    "bot:start": "npm --prefix bot run start"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
   }
 }

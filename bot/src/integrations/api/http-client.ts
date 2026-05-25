@@ -16,6 +16,10 @@ export class BotApiError extends Error {
 }
 
 const buildUrl = (path: string, query?: Record<string, string | undefined>): string => {
+  if (!botConfig.backendApiUrl) {
+    throw new BotApiError('BACKEND_API_URL is not configured');
+  }
+
   const normalizedBaseUrl = botConfig.backendApiUrl.endsWith('/')
     ? botConfig.backendApiUrl
     : `${botConfig.backendApiUrl}/`;

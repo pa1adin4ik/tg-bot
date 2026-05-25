@@ -1,3 +1,5 @@
+import { botConfig } from '../../config';
+import { demoApi } from '../../demo/demo-api';
 import { apiGet } from './http-client';
 
 export interface BotServiceCategory {
@@ -21,6 +23,10 @@ export interface BotService {
 }
 
 export const listBotServices = async (): Promise<BotService[]> => {
+  if (botConfig.demoMode) {
+    return demoApi.listServices();
+  }
+
   return apiGet<BotService[]>('/services', {
     status: 'active',
   });

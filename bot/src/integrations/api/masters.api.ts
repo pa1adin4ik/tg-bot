@@ -1,3 +1,5 @@
+import { botConfig } from '../../config';
+import { demoApi } from '../../demo/demo-api';
 import { apiGet } from './http-client';
 
 export interface BotMasterListItem {
@@ -49,11 +51,19 @@ export interface BotMasterDetail extends BotMasterListItem {
 }
 
 export const listBotMasters = async (serviceSlug?: string): Promise<BotMasterListItem[]> => {
+  if (botConfig.demoMode) {
+    return demoApi.listMasters(serviceSlug);
+  }
+
   return apiGet<BotMasterListItem[]>('/masters', {
     serviceSlug,
   });
 };
 
 export const getBotMaster = async (masterId: string): Promise<BotMasterDetail> => {
+  if (botConfig.demoMode) {
+    return demoApi.getMaster(masterId);
+  }
+
   return apiGet<BotMasterDetail>(`/masters/${masterId}`);
 };

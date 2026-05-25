@@ -1,5 +1,5 @@
 import { createApp } from './app';
-import { appConfig, logger } from './config';
+import { appConfig, env, logger } from './config';
 import { connectPrisma, disconnectPrisma } from './database';
 import { startWorkers } from './workers';
 
@@ -10,7 +10,12 @@ const bootstrap = async (): Promise<void> => {
 
   const app = createApp();
   const server = app.listen(appConfig.port, appConfig.host, () => {
-    startWorkers();
+    if (env.EMBEDDED_WORKERS_ENABLED) {
+      startWorkers();
+    } else {
+      logger.info('Embedded background workers are disabled for the API process');
+    }
+
     logger.info(
       {
         host: appConfig.host,

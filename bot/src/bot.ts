@@ -4,6 +4,12 @@ import { botConfig, logger } from './config';
 const bootstrap = async (): Promise<void> => {
   const bot = createBot();
 
+  if (botConfig.isProduction) {
+    logger.warn(
+      'Telegram bot is running with long polling and in-memory sessions. Deploy a single replica only.',
+    );
+  }
+
   await bot.launch();
   logger.info({ username: botConfig.username }, 'Telegram bot started');
 

@@ -37,10 +37,18 @@ const envSchema = z.object({
     .string()
     .default('true')
     .transform((value) => value === 'true' || value === '1'),
+  EMBEDDED_WORKERS_ENABLED: z
+    .string()
+    .default('false')
+    .transform((value) => value === 'true' || value === '1'),
   TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
 });
 
-const parsedEnv = envSchema.safeParse(process.env);
+const parsedEnv = envSchema.safeParse({
+  ...process.env,
+  EMBEDDED_WORKERS_ENABLED:
+    process.env.EMBEDDED_WORKERS_ENABLED ?? (process.env.NODE_ENV === 'production' ? 'false' : 'true'),
+});
 
 if (!parsedEnv.success) {
   console.error('Invalid environment variables', parsedEnv.error.flatten().fieldErrors);

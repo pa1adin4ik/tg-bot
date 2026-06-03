@@ -7,11 +7,13 @@ const defaultHeaders = {
 
 export class BotApiError extends Error {
   public readonly statusCode?: number;
+  public readonly responseBody?: string;
 
-  constructor(message: string, statusCode?: number) {
+  constructor(message: string, statusCode?: number, responseBody?: string) {
     super(message);
     this.name = 'BotApiError';
     this.statusCode = statusCode;
+    this.responseBody = responseBody;
   }
 }
 
@@ -51,7 +53,8 @@ export const apiGet = async <T>(
   });
 
   if (!response.ok) {
-    throw new BotApiError(`API request failed for ${path}`, response.status);
+    const responseBody = await response.text().catch(() => undefined);
+    throw new BotApiError(`API request failed for ${path}`, response.status, responseBody);
   }
 
   const payload = (await response.json()) as { data: T };
@@ -73,7 +76,8 @@ export const apiPost = async <T>(
   });
 
   if (!response.ok) {
-    throw new BotApiError(`API request failed for ${path}`, response.status);
+    const responseBody = await response.text().catch(() => undefined);
+    throw new BotApiError(`API request failed for ${path}`, response.status, responseBody);
   }
 
   const payload = (await response.json()) as { data: T };
